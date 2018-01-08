@@ -1,0 +1,82 @@
+public class MainActivity extends AppCompatActivity {
+    private RecyclerView rv_list;
+    private DemoAdapter demoAdapter;
+    private List<DataBean> list = new ArrayList<>();
+    private Button button;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        initData();
+        initView();
+        initEvent();
+    }
+
+    private void initEvent() {
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                for (int i = 0; i < 2; i++) {
+                    DataBean dataBean1 = new DataBean();
+                    dataBean1.setVal("3");
+                    list.add(dataBean1);
+                }
+                demoAdapter.setNewData(list);
+//                demoAdapter.notifyDataSetChanged();
+            }
+        });
+
+    }
+
+    private void initData() {
+        for (int i = 0; i < 2; i++) {
+            DataBean dataBean1 = new DataBean();
+            dataBean1.setVal(String.valueOf(i));
+            list.add(dataBean1);
+        }
+    }
+
+    private void initView() {
+        button = (Button) findViewById(R.id.demoButton);
+        rv_list = (RecyclerView) findViewById(R.id.rv_list);
+        rv_list.setLayoutManager(new LinearLayoutManager(this));
+        demoAdapter = new DemoAdapter(list);
+        demoAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
+        demoAdapter.isFirstOnly(false);
+        rv_list.setAdapter(demoAdapter);
+
+    }
+
+
+
+}
+//=================================================================================================================
+public class DemoAdapter extends BaseAdapter<DataBean, BaseViewHolder> {
+    public DemoAdapter(List<DataBean> data) {
+        super(data);
+        addItemType(0, R.layout.activity_demo_item);
+        addItemType(1, R.layout.item);
+    }
+
+
+    @Override
+    public void updataView(DataBean data, int position) {
+        super.updataView(data, position);
+        Log.e("ewrwerwer", position + "");
+        if (data.getVal().equals("1")) {
+            setViewStyle(data, 1);
+        } else {
+            setViewStyle(data, 0);
+        }
+    }
+
+    @Override
+    protected void convert(BaseViewHolder helper, DataBean item) {
+        super.convert(helper, item);
+        if (helper.getItemViewType() == 0) {
+            helper.setText(R.id.demoTV_id, item.getVal());
+        }
+
+    }
+}

@@ -1,0 +1,58 @@
+apply plugin: 'com.android.library'
+apply plugin: 'org.greenrobot.greendao'
+android {
+
+    compileSdkVersion 25
+    defaultConfig {
+
+        minSdkVersion 17
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        //使用JAVA8语法解析
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+ext {
+    okhttpVersion = "3.8.1"
+    retrofitVersion = "2.3.0"
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:appcompat-v7:25.4.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:recyclerview-v7:25.4.0'
+    compile project(':BaseAdapterlib')
+    // retrofit网络框架（版本必须要一致）
+    compile "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    compile "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
+    compile "com.squareup.retrofit2:converter-scalars:${retrofitVersion}"
+    compile "com.squareup.retrofit2:adapter-rxjava:${retrofitVersion}"
+    // okhttp日志打印和网络连接
+    compile "com.squareup.okhttp3:okhttp:${okhttpVersion}"
+    compile "com.squareup.okhttp3:logging-interceptor:${okhttpVersion}"
+    compile 'com.squareup.okio:okio:1.11.0'
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'io.reactivex:rxjava:1.1.6'
+    compile 'com.trello:rxlifecycle-android:1.0'
+    compile 'com.trello:rxlifecycle-components:1.0'
+    // 使用jsonschema2pojo创建javabean对象
+    compile 'com.google.code.gson:gson:2.8.1'
+    compile 'org.greenrobot:greendao:3.2.2'
+}
